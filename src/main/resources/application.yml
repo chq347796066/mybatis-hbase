@@ -1,0 +1,30 @@
+
+server:
+  port: 9001
+
+
+spring:
+  application:
+    name: mybatis-impala
+  impala:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:impala://hadoop103:21050/ods_wy_pay
+    driver-class-name: com.cloudera.impala.jdbc41.Driver
+    initialSize: 5
+    minIdle: 5
+    maxIdle: 100
+    maxActive: 200
+    maxWait: 5000
+    testOnBorrow: false
+    testOnReturn: false
+    validationQuery: SELECT 1
+    testWhileIdle: true
+    timeBetweenEvictionRunsMillis: 30000
+    minEvictableIdleTimeMillis: 1800000
+    numTestsPerEvictionRun: 100
+
+mybatis:
+  type-aliases-package: com.farben.chen.dao
+  impala-mapper-locations: classpath*:mapping/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

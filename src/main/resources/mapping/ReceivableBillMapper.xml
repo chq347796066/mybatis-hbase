@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.farben.chen.mapper.ReceivableBillMapper">
+
+
+    <resultMap type="com.farben.chen.dao.ReceivableBill" id="receivableBillMap">
+        <result property="id" column="id"/>
+        <result property="communityId" column="community_id"/>
+        <result property="companyName" column="company_name"/>
+        <result property="chargeNo" column="charge_no"/>
+        <result property="chargeName" column="charge_name"/>
+        <result property="communityId" column="community_id"/>
+        <result property="communityName" column="community_name"/>
+        <result property="billDate" column="bill_date"/>
+        <result property="receivable" column="receivable"/>
+        <result property="unpaid" column="unpaid"/>
+        <result property="paid" column="paid"/>
+        <result property="billNo" column="bill_no"/>
+        <result property="billingCycle" column="billing_cycle"/>
+
+    </resultMap>
+
+
+    <select id="selectReceivableBill" resultMap="receivableBillMap" parameterType="com.farben.chen.dto.ReceivableDto">
+        select * from ods_wy_pay.receivable_bill
+        <where>
+            <if test="compantyId != null and compantyId != ''" >and `companty_id` = #{compantyId}</if>
+            <if test="communityId != null and communityId != ''" >and `community_id` = #{communityId}</if>
+            <if test="chargeNo != null and chargeNo != ''" >and `charge_no` = #{chargeNo}</if>
+            <if test="startDate != null and startDate != ''" >and `bill_date` >= #{startDate}</if>
+            <if test="endDate != null and endDate != ''" >and `bill_date` <![CDATA[ <= ]]> #{endDate}</if>
+        </where>
+        order by id limit #{pageSize}  offset #{pageNum}
+    </select>
+
+
+</mapper>
